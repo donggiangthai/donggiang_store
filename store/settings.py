@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+CART_SESSION_ID = 'cart'
 
 # Application definition
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     # My app
     'shop',
     'users',
+    'cart',
 
     # 3rd-party app
     'storages',
