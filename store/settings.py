@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+CART_SESSION_ID = 'cart'
 
 # Application definition
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     # My app
     'shop',
     'users',
+    'cart',
 
     # 3rd-party app
     'storages',
@@ -82,6 +84,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart',
             ],
         },
     },
