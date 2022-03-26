@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'shop',
     'users',
     'cart',
+    'orders',
 
     # 3rd-party app
     'storages',
