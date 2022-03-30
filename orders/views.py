@@ -5,6 +5,10 @@ from orders.models import OrderItem, Order
 from orders.forms import OrderCreateForm
 from cart.cart import Cart
 from orders.tasks import order_created
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+import weasyprint
 
 
 # Create your views here.
@@ -18,6 +22,30 @@ def admin_order_detail(request, order_id):
             'order': order,
         }
     )
+
+
+@staff_member_required
+def admin_order_pdf(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    html = render_to_string(
+        'orders/order/pdf.html',
+        {
+            'order': order,
+        }
+    )
+    response = HttpResponse(
+        content_type='application/pdf',
+    )
+    response['Content-Disposition'] = f"filename=order_{order_id}.pdf"
+    weasyprint.HTML(string=html).write_pdf(
+        response,
+        stylesheets=[
+            weasyprint.CSS(
+                settings.STATIC_URL + 'css/pdf.css'
+            )
+        ]
+    )
+    return response
 
 
 def order_create(request):
