@@ -1,0 +1,173 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-01 00:17+0700\n"
+"PO-Revision-Date: 2022-03-31 23:43+0707\n"
+"Last-Translator:   <donggiangthai1998@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
+
+#: .\orders\models.py:11
+msgid "first_name"
+msgstr "First Name"
+
+#: .\orders\models.py:12
+msgid "last_name"
+msgstr "Last Name"
+
+#: .\orders\models.py:13
+msgid "email"
+msgstr "E-mail"
+
+#: .\orders\models.py:14
+msgid "address"
+msgstr "Address"
+
+#: .\orders\models.py:15
+msgid "postal_code"
+msgstr "Postal Code"
+
+#: .\orders\models.py:16
+msgid "city"
+msgstr "City"
+
+#: .\orders\templates\admin\orders\order\detail.html:5
+#: .\orders\templates\admin\orders\order\detail.html:12
+#: .\orders\templates\admin\orders\order\detail.html:18
+msgid "Order"
+msgstr "Order"
+
+#: .\orders\templates\admin\orders\order\detail.html:10
+msgid "Home"
+msgstr "Home"
+
+#: .\orders\templates\admin\orders\order\detail.html:11
+msgid "Orders"
+msgstr "Orders"
+
+#: .\orders\templates\admin\orders\order\detail.html:21
+msgid "Print Order"
+msgstr "Print Order"
+
+#: .\orders\templates\admin\orders\order\detail.html:26
+msgid "Created"
+msgstr "Created"
+
+#: .\orders\templates\admin\orders\order\detail.html:30
+msgid "Customer"
+msgstr "Customer"
+
+#: .\orders\templates\admin\orders\order\detail.html:38
+msgid "Address"
+msgstr "Address"
+
+#: .\orders\templates\admin\orders\order\detail.html:45
+msgid "Total amount"
+msgstr "Total amount"
+
+#: .\orders\templates\admin\orders\order\detail.html:49
+msgid "Status"
+msgstr "Status"
+
+#: .\orders\templates\admin\orders\order\detail.html:50
+msgid "Paid"
+msgstr "Paid"
+
+#: .\orders\templates\admin\orders\order\detail.html:50
+msgid "Pending payment"
+msgstr "Pending payment"
+
+#: .\orders\templates\admin\orders\order\detail.html:55
+msgid "Item bought"
+msgstr "Item bought"
+
+#: .\orders\templates\admin\orders\order\detail.html:59
+msgid "Product"
+msgstr "Product"
+
+#: .\orders\templates\admin\orders\order\detail.html:60
+msgid "Price"
+msgstr "Price"
+
+#: .\orders\templates\admin\orders\order\detail.html:61
+msgid "Quantity"
+msgstr "Quantity"
+
+#: .\orders\templates\admin\orders\order\detail.html:62
+#: .\orders\templates\admin\orders\order\detail.html:94
+#: .\orders\templates\orders\order\create.html:33
+msgid "Total"
+msgstr "Total"
+
+#: .\orders\templates\admin\orders\order\detail.html:77
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#: .\orders\templates\admin\orders\order\detail.html:82
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "              \"%(code)s\" (%(discount)s%% off)\n"
+#| "            "
+msgid ""
+"\n"
+"                  Coupon: \"%(code)s\"\n"
+"                  (%(discount)s%% off)\n"
+"                "
+msgstr ""
+"\n"
+"\"%(code)s\" (%(discount)s%% off)"
+
+#: .\orders\templates\orders\order\create.html:6
+#: .\orders\templates\orders\order\create.html:11
+msgid "Checkout"
+msgstr "Checkout"
+
+#: .\orders\templates\orders\order\create.html:13
+msgid "Your order"
+msgstr "Your order"
+
+#: .\orders\templates\orders\order\create.html:23
+msgid "Coupon"
+msgstr "Coupon"
+
+#: .\orders\templates\orders\order\create.html:26
+#, python-format
+msgid ""
+"\n"
+"              \"%(code)s\" (%(discount)s%% off)\n"
+"            "
+msgstr ""
+"\n"
+"\"%(code)s\" (%(discount)s%% off)"
+
+#: .\orders\templates\orders\order\create.html:37
+msgid "Place order"
+msgstr "Place order"
+
+#: .\orders\templates\orders\order\created.html:6
+#: .\orders\templates\orders\order\created.html:11
+msgid "Thank You"
+msgstr "Thank You"
+
+#: .\orders\templates\orders\order\created.html:12
+msgid "Your order has been successfully completed. Your order number is"
+msgstr "Your order has been successfully completed. Your order number is"
+
+#: .\orders\urls.py:8
+#, fuzzy
+#| msgid "Created"
+msgid "create/"
+msgstr "Created"

@@ -1,0 +1,219 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-01 00:17+0700\n"
+"PO-Revision-Date: 2022-04-01 00:17+0707\n"
+"Last-Translator:   <donggiangthai1998@gmail.com>\n"
+"Language-Team: \n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
+
+#: .\cart\forms.py:8 .\cart\templates\cart\detail.html:17
+msgid "Quantity"
+msgstr "Số lượng"
+
+#: .\cart\templates\cart\detail.html:6
+msgid "Cart Detail"
+msgstr "Chi tiết giỏ hàng"
+
+#: .\cart\templates\cart\detail.html:11
+msgid "Your Shopping Cart"
+msgstr "Giỏ hàng của bạn"
+
+#: .\cart\templates\cart\detail.html:18
+msgid "Remove"
+msgstr "Xóa"
+
+#: .\cart\templates\cart\detail.html:19
+msgid "Unit Price"
+msgstr "Đơn giá"
+
+#: .\cart\templates\cart\detail.html:20
+msgid "Price"
+msgstr "Giá"
+
+#: .\cart\templates\cart\detail.html:55
+msgid "Subtotal"
+msgstr "Tạm tính"
+
+#: .\cart\templates\cart\detail.html:61
+#, python-format
+msgid ""
+"\n"
+"                Coupon: \"%(code)s\"\n"
+"                (%(discount)s%% off)\n"
+"              "
+msgstr ""
+"\n"
+"Mã giảm giá: \"%(code)s\"\n"
+"(Giảm %(discount)s%%)"
+
+#: .\cart\templates\cart\detail.html:74
+msgid "Total"
+msgstr "Tổng"
+
+#: .\cart\templates\cart\detail.html:83
+msgid "Apply a coupon"
+msgstr "Áp dụng phiếu giảm giá"
+
+#: .\cart\templates\cart\detail.html:91
+msgid "Continue Shopping"
+msgstr "Tiếp tục mua hàng"
+
+#: .\cart\templates\cart\detail.html:92
+msgid "Check Out"
+msgstr "Thanh toán"
+
+#: .\coupons\forms.py:6
+msgid "Coupon"
+msgstr "Mã giảm giá"
+
+#: .\payment\templates\payment\canceled.html:5
+msgid "Payment Canceled"
+msgstr "Thanh toán bị hủy"
+
+#: .\payment\templates\payment\canceled.html:9
+msgid "Your payment has not been processed"
+msgstr "Thanh toán của bạn chưa được xử lý"
+
+#: .\payment\templates\payment\canceled.html:10
+msgid "There was a problem processing your payment."
+msgstr "Có một vấn đề trong việc xử lý thanh toán của bạn."
+
+#: .\payment\templates\payment\done.html:5
+msgid "Payment Successful"
+msgstr "Thanh toán thành công"
+
+#: .\payment\templates\payment\done.html:9
+msgid "Your payment was successful"
+msgstr "Thanh toán của bạn đã thành công"
+
+#: .\payment\templates\payment\process.html:6
+#: .\payment\templates\payment\process.html:11
+msgid "Pay by Credit Card"
+msgstr "Thanh toán bằng thẻ tín dụng"
+
+#: .\payment\templates\payment\process.html:13
+msgid "Card Number"
+msgstr "Số thẻ"
+
+#: .\payment\templates\payment\process.html:19
+msgid "Expiration Date"
+msgstr "Ngày hết hạn"
+
+#: .\payment\urls.py:8
+msgid "process/"
+msgstr "xu_ly/"
+
+#: .\payment\urls.py:9
+msgid "done/"
+msgstr "hoan_thanh/"
+
+#: .\payment\urls.py:10
+msgid "canceled/"
+msgstr "huy_bo/"
+
+#: .\shop\templates\shop\base.html:7 .\shop\templates\shop\base.html:13
+msgid "Dong Giang Computer"
+msgstr "Máy tính Đổng Giang"
+
+#: .\shop\templates\shop\base.html:18
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+#: .\shop\templates\shop\base.html:32
+msgid "Your cart"
+msgstr "Giỏ hàng của bạn"
+
+#: .\shop\templates\shop\base.html:34
+#, python-format
+msgid ""
+"\n"
+"                %(items)s item, $%(total)s\n"
+"              "
+msgid_plural ""
+"\n"
+"                %(items)s items, $%(total)s\n"
+"              "
+msgstr[0] ""
+"\n"
+"%(items)s sản phẩm, $%(total)s"
+msgstr[1] ""
+"\n"
+"%(items)s sản phẩm, $%(total)s"
+
+#: .\shop\templates\shop\base.html:41
+msgid "Your cart is empty."
+msgstr "Giỏ hàng trống."
+
+#: .\shop\templates\shop\product\detail.html:20
+msgid "Add to cart"
+msgstr "Thêm vào giỏ"
+
+#: .\shop\templates\shop\product\list.html:9
+#: .\shop\templates\shop\product\list.html:32
+msgid "Products"
+msgstr "Sản phẩm"
+
+#: .\shop\templates\shop\product\list.html:15
+msgid "Categories"
+msgstr "Danh mục"
+
+#: .\shop\templates\shop\product\list.html:18
+msgid "All"
+msgstr "Tất cả"
+
+#: .\store\settings.py:162
+msgid "English"
+msgstr "Tiếng Anh"
+
+#: .\store\settings.py:163
+msgid "Vietnamese"
+msgstr "Tiếng Việt"
+
+#: .\store\urls.py:27
+msgid "admin/"
+msgstr "quan_ly/"
+
+#: .\store\urls.py:32
+msgid "cart/"
+msgstr "gio_hang/"
+
+#: .\store\urls.py:33
+msgid "orders/"
+msgstr "don_hang/"
+
+#: .\store\urls.py:34
+msgid "payment/"
+msgstr "thanh_toan/"
+
+#: .\store\urls.py:35
+msgid "coupons/"
+msgstr "ma_giam_gia/"
+
+#: .\users\managers.py:15
+msgid "The Email must be set"
+msgstr "Bắt buộc thiết lập Email"
+
+#: .\users\managers.py:31
+msgid "Superuser must have is_staff=True."
+msgstr "Superuser buộc phải có is_staff=True."
+
+#: .\users\managers.py:33
+msgid "Superuser must have is_superuser=True."
+msgstr "Superuser buộc phải có is_superuser=True."
+
+#: .\users\models.py:10
+msgid "email address"
+msgstr "địa chỉ email"
