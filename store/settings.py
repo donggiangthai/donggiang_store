@@ -34,7 +34,7 @@ BRAINTREE_CONF = braintree.Configuration(
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -160,7 +160,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-USE_S3 = os.getenv('USE_S3')
+USE_S3 = (os.getenv('USE_S3', 'False') == 'True')
 
 if USE_S3:
     # aws settings
