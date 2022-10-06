@@ -24,14 +24,31 @@ SECRET_KEY=your_django_secret_key
     + Window: `.\venv\Scripts\activate`  
     + Linux: `source ./venv/*/bin/activate`  
 - Install all requirements needed: `pip install -r requirements.txt`
+- If you got an error while install mysqlclient then try this:
+    - CenOS
+        + `sudo yum install gcc`
+        + `sudo yum install python3-devel mysql-devel`
+    - Ubuntu:
+        + `sudo apt-get install python3-dev default-libmysqlclient-dev build-essential`
+    - Then try to run `pip install -r requierments.txt` again
+    
 
-### Step 4: _Let's migrate database_:  
-```python3 manage.py migrate```
+### Step 4: _Let's migrate database_:
+- Make sure you already have the connection to your database then run the command:  
+` python3 manage.py migrate `
+- If you got problem with pango please run this command  
+    - CenOS: ` sudo yum install pango.x86_64 `
+    - Ubuntu: ` sudo apt install libpangocairo-1.0-0 `
+- https://aws.amazon.com/premiumsupport/knowledge-center/rds-connect-ec2-bastion-host/
+- https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteAccessPermissionsReqd.html#bucket-policy-static-site
 
 ### Step 5: _Runserver_:
-- Collect static before the Front-end can appear: `python3 manage.py collectstatic`
-- Create superuser for admin site login and editing: `python3 manage.py createsuperuser`  
-- Run server: `python3 manage.py runserver`
+- Collect static before the Front-end can appear:  
+`python3 manage.py collectstatic`
+- Create superuser for admin site login and editing:  
+`python3 manage.py createsuperuser`  
+- Run server:  
+`python3 manage.py runserver 0.0.0.0:8080`
 
 ### Step 6: _Redis and Celery for asynchronous send mail_:  
 - You can run Redis server on docker:  
