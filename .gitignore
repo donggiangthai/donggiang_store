@@ -152,3 +152,5 @@ cython_debug/
 .idea/
 static_cnd/
 car_trader/car_trader/env.py
+**/.terraform.lock.hcl
+**/.terraform
