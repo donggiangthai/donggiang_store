@@ -41,7 +41,7 @@ def payment_process(request):
         client_token = gateway.client_token.generate()
         return render(
             request,
-            'payment/process.html',
+            'payment/payment-with-card.html',
             {
                 'order': order,
                 'client_token': client_token,

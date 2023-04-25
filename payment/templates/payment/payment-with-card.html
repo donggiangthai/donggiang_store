@@ -1,0 +1,71 @@
+{% load static %}
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<title>Pay by Credit Card</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{% static 'css/payment-with-card.css' %}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+<!-- Bootstrap inspired Braintree Hosted Fields example -->
+<div class="bootstrap-basic">
+	<form class="needs-validation" novalidate="" id="payment" method="post">
+		<div class="row">
+			<div class="col-sm-6 mb-3">
+				<label for="cc-name">Cardholder Name</label>
+				<div class="form-control" id="cc-name"></div>
+				<small class="text-muted">Full name as displayed on card</small>
+				<div class="invalid-feedback">
+					Name on card is required
+				</div>
+			</div>
+			<div class="col-sm-6 mb-3">
+				<label for="email">Email</label>
+				<input type="email" class="form-control" id="email" placeholder="you@example.com">
+				<div class="invalid-feedback">
+					Please enter a valid email address for shipping updates.
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-6 mb-3">
+				<label for="cc-number">Credit card number</label>
+				<div class="form-control" id="cc-number"></div>
+				<div class="invalid-feedback">
+					Credit card number is required
+				</div>
+			</div>
+			<div class="col-sm-3 mb-3">
+				<label for="cc-expiration">Expiration</label>
+				<div class="form-control" id="cc-expiration"></div>
+				<div class="invalid-feedback">
+					Expiration date required
+				</div>
+			</div>
+			<div class="col-sm-3 mb-3">
+				<label for="cc-expiration">CVV</label>
+				<div class="form-control" id="cc-cvv"></div>
+				<div class="invalid-feedback">
+					Security code required
+				</div>
+			</div>
+		</div>
+
+		<input type="hidden" id="payment-method-nonce" name="payment_method_nonce" value="">
+		<input type="hidden" id="client-token" name="client_token" value="{{ client_token }}" readonly>
+		{% csrf_token %}
+
+		<hr class="mb-4">
+		<div class="text-center">
+			<button class="btn btn-primary btn-lg" type="submit">Pay with <span id="card-brand">Card</span></button>
+		</div>
+	</form>
+</div>
+<!-- Scripts -->
+<!-- include the Braintree JS Client SDK -->
+<script src="https://js.braintreegateway.com/web/3.85.2/js/client.min.js"></script>
+<script src="https://js.braintreegateway.com/web/3.85.2/js/hosted-fields.min.js"></script>
+<script src="{% static 'js/payment-with-card.js' %}"></script>
+</body>
