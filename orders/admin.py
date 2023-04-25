@@ -53,6 +53,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = [
         'id',
         'first_name',
+        'middle_name',
         'last_name',
         'email',
         'address',

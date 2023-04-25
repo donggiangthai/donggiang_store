@@ -8,10 +8,11 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 class Order(models.Model):
     first_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
     address = models.CharField(max_length=250)
-    postal_code = models.PositiveIntegerField()
+    postal_code = models.PositiveIntegerField(default=90000)
     city = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
