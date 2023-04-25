@@ -5,6 +5,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.conf import settings
 from orders.models import Order
+import os
 
 
 @app.task
@@ -18,10 +19,10 @@ def payment_completed(order_id):
     subject = f"Dong Giang Store - EE invoice no. {order.id}"
     message = f"Please, find attached the invoice for your recent purchase."
     email = EmailMessage(
-        subject,
-        message,
-        'donggiangthai1998@gmail.com',
-        [order.email]
+        subject=subject,
+        body=message,
+        from_email=os.getenv('EMAIL_HOST_USER'),
+        to=[order.email]
     )
 
     # generate PDF
@@ -34,7 +35,7 @@ def payment_completed(order_id):
     out = BytesIO()
     weasyprint.HTML(string=html).write_pdf(
         out,
-        stylesheets=[weasyprint.CSS(settings.STATIC_URL + 'css/pdf.css')]
+        stylesheets=[weasyprint.CSS(settings.STATIC_ROOT + '/css/pdf.css')]
     )
 
     # attach PDF file
