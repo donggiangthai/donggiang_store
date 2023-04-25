@@ -153,3 +153,4 @@ cython_debug/
 static_cnd/
 car_trader/car_trader/env.py
 .secret/
+.run/
