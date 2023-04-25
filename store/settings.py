@@ -27,10 +27,10 @@ BRAINTREE_PRIVATE_KEY = os.getenv('BRAINTREE_PRIVATE_KEY')
 
 
 BRAINTREE_CONF = braintree.Configuration(
-    braintree.Environment.Sandbox,
-    BRAINTREE_MERCHANT_ID,
-    BRAINTREE_PUBLIC_KEY,
-    BRAINTREE_PRIVATE_KEY,
+    environment=braintree.Environment.Sandbox,
+    merchant_id=BRAINTREE_MERCHANT_ID,
+    public_key=BRAINTREE_PUBLIC_KEY,
+    private_key=BRAINTREE_PRIVATE_KEY,
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -173,7 +173,7 @@ if USE_S3:
     AWS_S3_REGION_NAME = 'ap-southeast-1'
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     # s3 static settings
-    STATIC_LOCATION = 'static'
+    STATIC_LOCATION = '/static/'
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
     STATICFILES_STORAGE = 'store.storage_backends.StaticStorage'
     # s3 public media settings
@@ -181,9 +181,9 @@ if USE_S3:
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
     DEFAULT_FILE_STORAGE = 'store.storage_backends.PublicMediaStorage'
 else:
-    STATIC_URL = 'static/'
+    STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cnd", "static_root")
-    MEDIA_URL = 'media/'
+    MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cnd", "media_root")
 
 # Default primary key field type
