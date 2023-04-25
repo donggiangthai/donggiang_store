@@ -221,6 +221,10 @@ ul.errorlist {
     margin-top:10px;
 }
 
+.product-detail .description {
+    clear: both;
+}
+
 .order-form {
     float:left;
 }
