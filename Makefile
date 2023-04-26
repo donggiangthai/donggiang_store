@@ -11,8 +11,8 @@ setup:
 	virtualenv ~/.donggiang_store --clear --python python3.10
 install:
 	# Update and upgrade distribution
-	sudo apt update && \
-	sudo apt upgrade -y
+	sudo apt-get update \
+	&& sudo apt-get upgrade -y
 	# Install all dependencies. For Ubuntu/Debian user only:
 	# For postgres:
 	sudo apt install python3-dev libpq-dev postgresql-common
@@ -42,5 +42,5 @@ runserver:
 	# Collect static file
 	python3 manage.py collectstatic --noinput
 	# Run django server
-	python3 manage.py runserver
+	python3 manage.py runserver 0.0.0.0:8000
 all: install django-migration celery-start

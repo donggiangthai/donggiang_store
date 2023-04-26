@@ -9,6 +9,7 @@
 AWS_ACCESS_KEY_ID=your_access_key
 AWS_SECRET_ACCESS_KEY=your_secret_key
 AWS_STORAGE_BUCKET_NAME=your_bucket_name
+AWS_S3_REGION_NAME=your_s3_bucker_region
 USE_S3=True_or_False
 NAME_DB=your_db_name
 USER_DB=your_db_user
@@ -70,3 +71,11 @@ Visit [Redis Developer -
 - Now run `make all` to install all dependencies, setup django project, start celery worker.
 - Finally, run `make runserver` to start the Django server.
 - Run `make celery-stop` to stop the worker.
+
+### _Running docker from WSL_:
+- Open file ~/.docker/config.json with text editor `sudo vi ~/.docker/config.json`.
+- Change `credsStore` to `credStore`.
+- Close and opend terminal again.
+- Run the command to build docker image `docker build --tag donggiang_store:v1.0.0 .`
+- Run the script to run the container `docker container run --name donggiang_store --detach --publish 8000:8000 donggiang_store:v1.0.0`
+- Simple way is to run the script `source run_docker.sh`
