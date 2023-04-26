@@ -1,0 +1,6 @@
+.donggiang_store
+.idea
+.run
+.secret
+.circleci
+**static_cdn/*
