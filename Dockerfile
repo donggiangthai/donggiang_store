@@ -79,6 +79,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
     libpq-dev \
     libpango-1.0-0 \
     libpangoft2-1.0-0 \
+    netcat \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -106,6 +107,9 @@ USER app
 
 # Expose port 8000 for Django as default port
 EXPOSE 8000
+
+# Entrypoint
+ENTRYPOINT ["/home/app/web/entrypoint.sh"]
 
 # Runserver at container launch
 CMD ["/home/app/web/start-server.sh"]
