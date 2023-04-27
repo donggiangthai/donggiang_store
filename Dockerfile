@@ -45,14 +45,14 @@ RUN --mount=type=cache,target=/var/cache/apt \
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /
+WORKDIR /usr/src/app/
 # Upgrade pip
 # hadolint ignore=DL3013
 RUN pip install --upgrade --no-cache-dir pip
 # Copy requirements.txt
 COPY requirements.txt .
 # Run pip wheel
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /wheels --requirement requirements.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels --requirement requirements.txt
 
 # Final state
 FROM python:3.10-slim-bullseye
@@ -82,8 +82,8 @@ RUN --mount=type=cache,target=/var/cache/apt \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /wheels /wheels
-COPY --from=builder /requirements.txt .
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --no-cache-dir /wheels/*
 
 # Copy requirements.txt
@@ -96,7 +96,7 @@ RUN pip install --no-cache-dir /wheels/*
 # Copy source code to working directory
 COPY . $APP_HOME
 # Copy environment variable
-COPY .env $APP_HOME
+#COPY .env $APP_HOME
 
 # chown all the files to the app user
 RUN chown --recursive --from=root:root app:app $APP_HOME

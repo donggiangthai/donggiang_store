@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # start-server.sh
 
-source .env
+#source .env
 
 # migration model to database
 make django-migration
