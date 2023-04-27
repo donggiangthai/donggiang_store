@@ -12,3 +12,4 @@ gevent
 flower
 watchdog
 whitenoise
+redis
