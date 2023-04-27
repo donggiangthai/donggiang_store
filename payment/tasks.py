@@ -17,7 +17,7 @@ def payment_completed(order_id):
 
     # create invoice email
     subject = f"Dong Giang Store - EE invoice no. {order.id}"
-    message = f"Please, find attached the invoice for your recent purchase."
+    message = "Please, find attached the invoice for your recent purchase."
     email = EmailMessage(
         subject=subject,
         body=message,
