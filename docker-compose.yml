@@ -8,7 +8,7 @@ services:
 
   flower:
     image: mher/flower:master
-    command: celery --broker=redis://redis:6379/0 flower --port=5555
+    command: celery --broker=redis://redis:6379/0 flower --port=5555 --purge_offline_workers=3600
     ports:
       - "5555:5555"
     depends_on:
