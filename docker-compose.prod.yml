@@ -20,6 +20,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - static_volume:/home/app/web/static_cdn/static_root
+      - media_volume:/home/app/web/static_cdn/media_root
     expose:
       - 8000
     env_file:
@@ -41,6 +42,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - static_volume:/home/app/web/static_cdn/static_root
+      - media_volume:/home/app/web/static_cdn/media_root
     ports:
       - "1337:80"
     depends_on:
@@ -49,3 +51,4 @@ services:
 volumes:
   postgres_data:
   static_volume:
+  media_volume:
