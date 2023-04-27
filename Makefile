@@ -21,6 +21,11 @@ install:
 	# Install project dependencies
 	pip install --upgrade pip && \
 	pip install --no-cache-dir --require-virtualenv --requirement requirements.txt
+test:
+	# Lint py scripts
+	DJANGO_SETTINGS_MODULE=store.settings pylint --load-plugins pylint_django --disable=R,C,W0611 **/*.py
+	# Lint Dockerfile
+	docker run --rm --interactive hadolint/hadolint < Dockerfile
 django-migration:
 	# Make migrations model
 	python3 manage.py makemigrations
