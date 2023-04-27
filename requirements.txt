@@ -13,3 +13,4 @@ flower
 watchdog
 whitenoise
 redis
+gunicorn
