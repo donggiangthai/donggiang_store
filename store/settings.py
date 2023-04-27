@@ -54,6 +54,9 @@ CART_SESSION_ID = 'cart'
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+CSRF_TRUSTED_ORIGINS = ['https://*', 'http://*.127.0.0.1:1337', 'http://localhost:1337']
+CORS_ORIGIN_ALLOW_ALL = True
+
 # Application definition
 
 INSTALLED_APPS = [
