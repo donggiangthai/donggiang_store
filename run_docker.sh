@@ -29,4 +29,5 @@ fi
 # Run the docker container
 docker container run --name donggiang_store --publish 8000:8000 \
     --interactive --tty --detach \
+    --env-file .env \
     $image_tag 2>&1
