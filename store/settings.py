@@ -54,7 +54,7 @@ CART_SESSION_ID = 'cart'
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-CSRF_TRUSTED_ORIGINS = ['https://*', 'http://*.127.0.0.1:1337', 'http://localhost:1337']
+CSRF_TRUSTED_ORIGINS = ['https://*', 'http://127.0.0.1:1337', 'http://localhost:1337']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
@@ -96,7 +96,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'store.urls'
@@ -197,7 +196,6 @@ if USE_S3:
 else:
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn", "static_root")
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, "static_cdn", "media_root")
 

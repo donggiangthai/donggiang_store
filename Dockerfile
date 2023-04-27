@@ -65,7 +65,8 @@ ENV HOME=/home/app
 ENV APP_HOME=/home/app/web
 
 # Create a working directory
-RUN mkdir --parents $APP_HOME
+RUN mkdir --parents $APP_HOME \
+    && mkdir --parents $APP_HOME/static_cdn/static_root
 WORKDIR $APP_HOME
 
 # Install postgres dependencies

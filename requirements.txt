@@ -11,6 +11,5 @@ psycopg2
 gevent
 flower
 watchdog
-whitenoise
 redis
 gunicorn
