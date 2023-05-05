@@ -15,3 +15,5 @@ redis
 gunicorn
 boto3
 pylint
+pylint-django
+pylint-plugin-utils
