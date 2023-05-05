@@ -90,17 +90,8 @@ COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --no-cache-dir /wheels/*
 
-# Copy requirements.txt
-#COPY requirements.txt /opt/app/donggiang_store/
-# Install project dependencies from requirements.txt
-# hadolint ignore=DL3013
-#RUN pip install --upgrade --no-cache-dir pip \
-#    && pip install --no-cache-dir --requirement requirements.txt
-
 # Copy source code to working directory
 COPY . $APP_HOME
-# Copy environment variable
-#COPY .env $APP_HOME
 
 # chown all the files to the app user
 RUN chown --recursive --from=root:root app:app $APP_HOME
