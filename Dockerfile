@@ -2,7 +2,7 @@ FROM python:3.10-slim-bullseye as builder
 
 # Install all python3.10 dependencies
 # hadolint ignore=DL3008
-RUN --mount=type=cache,target=/var/cache/apt \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update --fix-missing \
     && DEBIAN_FRONTEND=noninteractive apt-get install \
     --quiet --no-install-recommends \
@@ -15,7 +15,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
 
 # For postgres:
 # hadolint ignore=DL3008
-RUN --mount=type=cache,target=/var/cache/apt \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update --fix-missing \
     && DEBIAN_FRONTEND=noninteractive apt-get install \
     --quiet --no-install-recommends \
@@ -27,7 +27,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
 
 # For weasyprint
 # hadolint ignore=DL3008
-RUN --mount=type=cache,target=/var/cache/apt \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update --fix-missing \
     && DEBIAN_FRONTEND=noninteractive apt-get install \
     --quiet --no-install-recommends \
@@ -78,6 +78,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
     --quiet --no-install-recommends \
     --fix-broken --show-progress --assume-yes \
     make \
+    awscli \
     libpq-dev \
     libpango-1.0-0 \
     libpangoft2-1.0-0 \
@@ -109,6 +110,10 @@ USER app
 
 # Expose port 8000 for Django as default port
 EXPOSE 8000
+
+ARG profile=""
+
+ENV profile="$profile"
 
 # Entrypoint
 ENTRYPOINT ["/home/app/web/entrypoint.sh"]
