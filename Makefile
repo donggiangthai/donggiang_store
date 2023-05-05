@@ -3,27 +3,51 @@
 setup:
 	# Install Virtualenv
 	python3.10 -m pip install virtualenv
-	# Create the environment under the home directory
+	# Create the environment under the repo root directory (same path as Makefile)
 	# Since the celery only support latest version of Python is Python3.10 therefore we're using it.
 	# Because the Makefile running all thing in a separate shell,
 	# this is the must to activate the environment manually after setup
 	# source ~/.donggiang_store/bin/activate
-	virtualenv ~/.donggiang_store --clear --python python3.10
+	virtualenv .donggiang_store --clear --python python3.10
 install:
-	# Update and upgrade distribution
-	sudo apt-get update \
-	&& sudo apt-get upgrade -y
 	# Install all dependencies. For Ubuntu/Debian user only:
+	# Essential dependencies
+	sudo apt-get update --fix-missing \
+	&& sudo DEBIAN_FRONTEND=noninteractive apt-get install \
+	--quiet --no-install-recommends \
+    --fix-broken --show-progress --assume-yes \
+    build-essential \
+    python3-dev \
+    vim
+
 	# For postgres:
-	sudo apt install python3-dev libpq-dev postgresql-common
+	sudo apt-get update --fix-missing \
+	&& sudo DEBIAN_FRONTEND=noninteractive apt-get install \
+	--quiet --no-install-recommends \
+    --fix-broken --show-progress --assume-yes \
+	libpq-dev \
+    postgresql-common
+
 	# For weasyprint
-	sudo apt install python3-pip libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0 libffi-dev libjpeg-dev libopenjp2-7-dev
+	sudo apt-get update --fix-missing \
+	&& sudo DEBIAN_FRONTEND=noninteractive apt-get install \
+  	--quiet --no-install-recommends \
+    --fix-broken --show-progress --assume-yes \
+    libpango-1.0-0 \
+    libharfbuzz0b \
+    libpangoft2-1.0-0 \
+    libffi-dev \
+    libjpeg-dev \
+    libopenjp2-7-dev
+
 	# Install project dependencies
-	pip install --upgrade pip && \
-	pip install --no-cache-dir --require-virtualenv --requirement requirements.txt
+	# The Makefile is using for CI/CD therefore we will use cache to decrease the build time
+	pip install --upgrade pip \
+	&& pip install --require-virtualenv --requirement requirements.txt
 test:
 	# Lint py scripts
 	DJANGO_SETTINGS_MODULE=store.settings pylint --load-plugins pylint_django --disable=R,C,W0611 **/*.py
+lint:
 	# Lint Dockerfile
 	docker run --rm --interactive hadolint/hadolint < Dockerfile
 django-migration:
@@ -34,8 +58,6 @@ django-migration:
 celery-start:
 	# Start a worker
 	celery --app=store worker --detach --loglevel=INFO --pool=gevent -n worker@%h
-	# Auto reload worker with Watchdog => Cause an increase of CPU utilize, need more research with auto reload celery worker
-	# watchmedo auto-restart --directory=./ --pattern=*.py --recursive --signal SIGTERM -- celery --app=store worker --detach --loglevel=INFO --pool gevent -n watchdog@%h
 celery-stop:
 	# Kill celery worker
 	pkill --signal TERM --full 'celery worker'
