@@ -13,17 +13,62 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from dotenv import load_dotenv
 import braintree
+import boto3
+from boto3.session import Session
 
-load_dotenv()
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+# For local only
+load_dotenv(
+    dotenv_path=os.path.join(
+        BASE_DIR,
+        '.env'
+    )
+)
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = bool(os.environ.get('DEBUG', 'False') == 'True')
+
+if DEBUG:
+    boto3_session = Session(
+        profile_name=os.environ.get('AWS_PROFILE_NAME'),
+        region_name=os.environ.get('AWS_REGION_NAME')
+    )
+    ssm_client = boto3_session.client(service_name='ssm')
+else:
+    ssm_client = boto3.client(
+        service_name='ssm',
+        region_name=os.environ.get('AWS_REGION_NAME')
+    )
+
+ssm_prefix = '/donggiang_store'
 
 # Braintree setting
 # Merchant ID
-BRAINTREE_MERCHANT_ID = os.getenv('BRAINTREE_MERCHANT_ID')
+BRAINTREE_MERCHANT_ID = os.environ.get(
+    'BRAINTREE_MERCHANT_ID',
+    ssm_client.get_parameter(
+        Name=f"{ssm_prefix}/BRAINTREE_MERCHANT_ID",
+        WithDecryption=True
+    )['Parameter']['Value']
+)
 # Public Key
-BRAINTREE_PUBLIC_KEY = os.getenv('BRAINTREE_PUBLIC_KEY')
+BRAINTREE_PUBLIC_KEY = os.environ.get(
+    'BRAINTREE_PUBLIC_KEY',
+    ssm_client.get_parameter(
+        Name=f"{ssm_prefix}/BRAINTREE_PUBLIC_KEY",
+        WithDecryption=True
+    )['Parameter']['Value']
+)
 # Private key
-BRAINTREE_PRIVATE_KEY = os.getenv('BRAINTREE_PRIVATE_KEY')
-
+BRAINTREE_PRIVATE_KEY = os.environ.get(
+    'BRAINTREE_PRIVATE_KEY',
+    ssm_client.get_parameter(
+        Name=f"{ssm_prefix}/BRAINTREE_PRIVATE_KEY",
+        WithDecryption=True
+    )['Parameter']['Value']
+)
 
 BRAINTREE_CONF = braintree.Configuration(
     environment=braintree.Environment.Sandbox,
@@ -32,17 +77,17 @@ BRAINTREE_CONF = braintree.Configuration(
     private_key=BRAINTREE_PRIVATE_KEY,
 )
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    ssm_client.get_parameter(
+        Name=f"{ssm_prefix}/DJANGO_SECRET_KEY",
+        WithDecryption=True
+    )['Parameter']['Value']
+)
 
 ALLOWED_HOSTS = ['*']
 
@@ -130,15 +175,45 @@ WSGI_APPLICATION = 'store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('NAME_DB'),
+        'NAME': os.environ.get(
+            'DATABASE_NAME',
+            ssm_client.get_parameter(
+                Name=f"{ssm_prefix}/DATABASE_NAME",
+                WithDecryption=True
+            )['Parameter']['Value']
+        ),
         # This options below for using with MySQL.
         # 'OPTIONS': {
         #     'init_command': "SET sql_mode='STRICT_ALL_TABLES'",
         # },
-        'USER': os.getenv('USER_DB'),
-        'PASSWORD': os.getenv('PASSWORD_DB'),
-        'HOST': os.getenv('HOST_DB'),
-        'PORT': os.getenv('PORT_DB'),
+        'USER': os.environ.get(
+            'DATABASE_USERNAME',
+            ssm_client.get_parameter(
+                Name=f"{ssm_prefix}/DATABASE_USERNAME",
+                WithDecryption=True
+            )['Parameter']['Value']
+        ),
+        'PASSWORD': os.environ.get(
+            'DATABASE_PASSWORD',
+            ssm_client.get_parameter(
+                Name=f"{ssm_prefix}/DATABASE_PASSWORD",
+                WithDecryption=True
+            )['Parameter']['Value']
+        ),
+        'HOST': os.environ.get(
+            'DATABASE_HOST',
+            ssm_client.get_parameter(
+                Name=f"{ssm_prefix}/DATABASE_HOST",
+                WithDecryption=True
+            )['Parameter']['Value']
+        ),
+        'PORT': os.environ.get(
+            'DATABASE_PORT',
+            ssm_client.get_parameter(
+                Name=f"{ssm_prefix}/DATABASE_PORT",
+                WithDecryption=True
+            )['Parameter']['Value']
+        ),
     }
 }
 
@@ -174,13 +249,31 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-USE_S3 = (os.getenv('USE_S3', 'False') == 'True')
+USE_S3 = bool(os.environ.get('USE_S3', 'False') == 'True')
 
 if USE_S3:
     # aws settings
-    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_ACCESS_KEY_ID = os.environ.get(
+        'AWS_ACCESS_KEY_ID',
+        ssm_client.get_parameter(
+            Name=f"{ssm_prefix}/AWS_ACCESS_KEY_ID",
+            WithDecryption=True
+        )['Parameter']['Value']
+    )
+    AWS_SECRET_ACCESS_KEY = os.environ.get(
+        'AWS_SECRET_ACCESS_KEY',
+        ssm_client.get_parameter(
+            Name=f"{ssm_prefix}/AWS_SECRET_ACCESS_KEY",
+            WithDecryption=True
+        )['Parameter']['Value']
+    )
+    AWS_STORAGE_BUCKET_NAME = os.environ.get(
+        'AWS_STORAGE_BUCKET_NAME',
+        ssm_client.get_parameter(
+            Name=f"{ssm_prefix}/AWS_STORAGE_BUCKET_NAME",
+            WithDecryption=True
+        )['Parameter']['Value']
+    )
     AWS_DEFAULT_ACL = None
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
     AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
@@ -218,6 +311,23 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/?verification=1'
 SITE_ID = 1
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'APP': {
+            'client_id': os.environ.get(
+                'GOOGLE_CLIENT_ID',
+                ssm_client.get_parameter(
+                    Name=f"{ssm_prefix}/GOOGLE_CLIENT_ID",
+                    WithDecryption=True
+                )['Parameter']['Value']
+            ),
+            'secret': os.environ.get(
+                'GOOGLE_SECRET',
+                ssm_client.get_parameter(
+                    Name=f"{ssm_prefix}/GOOGLE_SECRET",
+                    WithDecryption=True
+                )['Parameter']['Value']
+            ),
+            'key': ''
+        },
         'SCOPE': [
             'profile',
             'email',
@@ -242,7 +352,19 @@ LOGIN_REDIRECT_URL = '/'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = os.environ.get(
+    'EMAIL_HOST_USER',
+    ssm_client.get_parameter(
+        Name=f"{ssm_prefix}/EMAIL_HOST_USER",
+        WithDecryption=True
+    )['Parameter']['Value']
+)
+EMAIL_HOST_PASSWORD = os.environ.get(
+    'EMAIL_HOST_PASSWORD',
+    ssm_client.get_parameter(
+        Name=f"{ssm_prefix}/EMAIL_HOST_PASSWORD",
+        WithDecryption=True
+    )['Parameter']['Value']
+)
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
