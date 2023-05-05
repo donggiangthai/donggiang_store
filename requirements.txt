@@ -13,3 +13,4 @@ flower
 watchdog
 redis
 gunicorn
+boto3
