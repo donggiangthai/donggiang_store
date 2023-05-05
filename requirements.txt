@@ -14,3 +14,4 @@ watchdog
 redis
 gunicorn
 boto3
+pylint
