@@ -1,2 +1,56 @@
 ---
 version: 2.1
+
+jobs:
+  test-and-lint:
+    docker:
+      - image: circleci/python:3.10-slim-bullseye
+
+    working_directory: ~/donggiang_store
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: create virtualenv
+          command: |
+            make setup
+
+      - run:
+          name: install dependencies
+          command: |
+            . .donggiang_store/bin/activate
+            make install
+
+      - save_cache:
+          paths:
+            - ./.donggiang_store
+            - /var/cache/apt
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+      # run tests!
+      - run:
+          name: run tests
+          command: |
+            . .donggiang_store/bin/activate
+            make test
+
+      # run lints!
+      - setup_remote_docker
+      - run:
+          name: run lint
+          command: |
+            . .donggiang_store/bin/activate
+            make lint
+
+workflows:
+  donggiang_store-workflows:
+    jobs:
+      - test-and-lint
