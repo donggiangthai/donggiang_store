@@ -60,7 +60,7 @@ jobs:
 
     steps:
       - checkout
-      - docker/install-docker-compose
+      - docker/install-docker-tools
       - run:
           name: build image
           command: |
