@@ -5,6 +5,13 @@ orbs:
   docker: circleci/docker@2.2.0
 
 commands:
+  exporter:
+    steps:
+      - run:
+          name: Export environment variable
+          command: |
+            echo 'export TAG="${CIRCLE_SHA1:0:7}"' >> "$BASH_ENV"
+
   setup-aws-cli:
     parameters:
       aws-access-key-id:
@@ -138,6 +145,7 @@ jobs:
 
     steps:
       - checkout
+      - exporter
       - setup_remote_docker
       - run:
           name: install setup aws-cli dependencies

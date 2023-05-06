@@ -18,7 +18,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/donggiang_store:web"
+    image: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/donggiang_store-web:${TAG}"
     expose:
       - 8000
     environment:
@@ -32,7 +32,7 @@ services:
     build:
       context: nginx
       dockerfile: Dockerfile
-    image: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/donggiang_store:web"
+    image: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/donggiang_store-nginx:${TAG}"
     ports:
       - "1337:80"
     depends_on:
