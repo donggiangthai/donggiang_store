@@ -18,6 +18,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: donggiangthai/donggiang_store_local:web
     volumes:
       - .:/usr/src/app/
       - ~/.aws/credentials:/home/app/.aws/credentials:ro
@@ -33,10 +34,8 @@ services:
     image: postgres:15.2-alpine3.17
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=donggiang_store
-      - POSTGRES_PASSWORD=Admin123
-      - POSTGRES_DB=donggiang_store
+    env_file:
+      - .env.db
 
 volumes:
   postgres_data:

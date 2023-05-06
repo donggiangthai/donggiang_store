@@ -30,5 +30,14 @@ docker image prune --filter "dangling=true" --force
 docker-compose --file "$docker_compose_file" --project-name "donggiang_store_local" build \
   --build-arg profile=$aws_profile_name
 
+# Get the docker hub password from the secret env file
+source .secret/.env
+# Docker Hub ID
+docker_path=donggiangthai
+# Login to docker hub
+echo "$DOCKER_PASSWORD" | docker login --username $docker_path --password-stdin
+# Push image to docker hub
+#docker-compose --file "$docker_compose_file" --project-name "donggiang_store_local" push
+
 # Run docker compose command
 docker-compose --file "$docker_compose_file" --project-name "donggiang_store_local" up --detach --no-build
