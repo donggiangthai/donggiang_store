@@ -15,7 +15,9 @@ from dotenv import load_dotenv
 import braintree
 import boto3
 from boto3.session import Session
-from ec2_metadata import ec2_metadata
+import ec2_metadata
+from requests.exceptions import ReadTimeout
+from urllib3.exceptions import ReadTimeoutError
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -31,6 +33,15 @@ load_dotenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', 'False') == 'True')
 
+try:
+    default_region = ec2_metadata.EC2Metadata.region
+except ReadTimeout:
+    print(f"Not running in an EC2 instance: \n {ReadTimeout}")
+except ReadTimeoutError:
+    print(f"Not running in an EC2 instance: \n {ReadTimeoutError}")
+finally:
+    default_region = 'us-east-1'
+
 if DEBUG:
     boto3_session = Session(
         profile_name=os.environ.get('AWS_PROFILE_NAME'),
@@ -43,8 +54,8 @@ else:
     ssm_client = boto3.client(
         service_name='ssm',
         region_name=os.environ.get(
-            ec2_metadata.region,
-            'AWS_DEFAULT_REGION'
+            'AWS_DEFAULT_REGION',
+            default_region
         )
     )
 
