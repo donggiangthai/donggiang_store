@@ -12,8 +12,8 @@ setup:
 install:
 	# Install all dependencies. For Ubuntu/Debian user only:
 	# Essential dependencies
-	sudo apt-get update --fix-missing \
-	&& sudo DEBIAN_FRONTEND=noninteractive apt-get install \
+	#sudo apt-get update --fix-missing && \
+	sudo DEBIAN_FRONTEND=noninteractive apt-get install \
 	--quiet --no-install-recommends \
     --fix-broken --show-progress --assume-yes \
     build-essential \
@@ -21,16 +21,16 @@ install:
     vim
 
 	# For postgres:
-	sudo apt-get update --fix-missing \
-	&& sudo DEBIAN_FRONTEND=noninteractive apt-get install \
+	#sudo apt-get update --fix-missing && \
+	sudo DEBIAN_FRONTEND=noninteractive apt-get install \
 	--quiet --no-install-recommends \
     --fix-broken --show-progress --assume-yes \
 	libpq-dev \
     postgresql-common
 
 	# For weasyprint
-	sudo apt-get update --fix-missing \
-	&& sudo DEBIAN_FRONTEND=noninteractive apt-get install \
+	#sudo apt-get update --fix-missing && \
+	sudo DEBIAN_FRONTEND=noninteractive apt-get install \
   	--quiet --no-install-recommends \
     --fix-broken --show-progress --assume-yes \
     libpango-1.0-0 \

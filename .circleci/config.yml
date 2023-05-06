@@ -4,6 +4,85 @@ version: 2.1
 orbs:
   docker: circleci/docker@2.2.0
 
+commands:
+  setup-aws-cli:
+    parameters:
+      aws-access-key-id:
+        default: AWS_ACCESS_KEY_ID
+        description: >
+          AWS access key id for IAM role. Set this to the name of
+          the environment variable you will use to hold this
+          value, i.e. AWS_ACCESS_KEY.
+        type: env_var_name
+      aws-region:
+        default: AWS_DEFAULT_REGION
+        description: >
+          Env var of AWS region to operate in
+          (defaults to AWS_DEFAULT_REGION)
+        type: env_var_name
+      aws-secret-access-key:
+        default: AWS_SECRET_ACCESS_KEY
+        description: >
+          AWS secret key for IAM role. Set this to the name of
+          the environment variable you will use to hold this
+          value, i.e. AWS_SECRET_ACCESS_KEY.
+        type: env_var_name
+      profile-name:
+        default: default
+        description: Profile name to be configured.
+        type: string
+    steps:
+      - run:
+          name: "Install AWS CLI"
+          command: |
+            if aws --version | grep "aws-cli/" > /dev/null
+            then
+              echo "AWS CLI is already installed, skipping installation."
+              exit 0
+            fi
+
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+      - run:
+          name: "Configure AWS credential"
+          environment:
+            PARAM_AWS_CLI_ACCESS_KEY_ID: <<parameters.aws-access-key-id>>
+            PARAM_AWS_CLI_SECRET_ACCESS_KEY: <<parameters.aws-secret-access-key>>
+            PARAM_AWS_CLI_REGION: <<parameters.aws-region>>
+            PARAM_AWS_CLI_PROFILE_NAME: <<parameters.profile-name>>
+          when: << parameters.when >>
+          command: |
+            if aws --version | grep "aws-cli/" > /dev/null
+            then
+              echo "Due to AWS CLI is already installed, skipping configuration AWS credential."
+              exit 0
+            fi
+
+            PARAM_AWS_CLI_ACCESS_KEY_ID=$(eval echo "\$$PARAM_AWS_CLI_ACCESS_KEY_ID")
+
+            PARAM_AWS_CLI_SECRET_ACCESS_KEY=$(eval echo "\$$PARAM_AWS_CLI_SECRET_ACCESS_KEY")
+
+            PARAM_AWS_CLI_REGION=$(eval echo "\$$PARAM_AWS_CLI_REGION")
+
+            if [ -z "$PARAM_AWS_CLI_ACCESS_KEY_ID" ] || [ -z "${PARAM_AWS_CLI_SECRET_ACCESS_KEY}" ]
+            then
+              echo "Cannot configure profile. AWS access key id and AWS secret access key must be provided."
+              exit 1
+            fi
+
+            aws configure set \
+              aws_access_key_id "$PARAM_AWS_CLI_ACCESS_KEY_ID" \
+              --profile "$PARAM_AWS_CLI_PROFILE_NAME"
+
+            aws configure set \
+              aws_secret_access_key "$PARAM_AWS_CLI_SECRET_ACCESS_KEY" \
+              --profile "$PARAM_AWS_CLI_PROFILE_NAME"
+
+            aws configure set \
+              region "$PARAM_AWS_CLI_REGION" \
+              --profile "$PARAM_AWS_CLI_PROFILE_NAME"
+
 jobs:
   test-and-lint:
     docker:
@@ -61,7 +140,16 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - docker/install-docker-tools
+      - run:
+          name: install setup aws-cli dependencies
+          command: |
+            sudo apt-get install \
+              --quiet --no-install-recommends \
+              --fix-broken --show-progress --assume-yes \
+            curl \
+            unzip
+      - setup-aws-cli
+      - docker/install-docker-compose
       - run:
           name: build image
           command: |
@@ -70,6 +158,8 @@ jobs:
       - run:
           name: push image
           command: |
+            aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | \
+            docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
             docker-compose --file "docker-compose.prod.yml" --project-name "donggiang_store-prod" push
 
 workflows:
