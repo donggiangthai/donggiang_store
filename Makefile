@@ -12,7 +12,7 @@ setup:
 install:
 	# Install all dependencies. For Ubuntu/Debian user only:
 	# Essential dependencies
-	#sudo apt-get update --fix-missing && \
+	sudo apt-get update --fix-missing && \
 	sudo DEBIAN_FRONTEND=noninteractive apt-get install \
 	--quiet --no-install-recommends \
     --fix-broken --show-progress --assume-yes \
@@ -21,7 +21,7 @@ install:
     vim
 
 	# For postgres:
-	#sudo apt-get update --fix-missing && \
+	sudo apt-get update --fix-missing && \
 	sudo DEBIAN_FRONTEND=noninteractive apt-get install \
 	--quiet --no-install-recommends \
     --fix-broken --show-progress --assume-yes \
@@ -29,7 +29,7 @@ install:
     postgresql-common
 
 	# For weasyprint
-	#sudo apt-get update --fix-missing && \
+	sudo apt-get update --fix-missing && \
 	sudo DEBIAN_FRONTEND=noninteractive apt-get install \
   	--quiet --no-install-recommends \
     --fix-broken --show-progress --assume-yes \
