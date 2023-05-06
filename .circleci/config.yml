@@ -1,6 +1,9 @@
 ---
 version: 2.1
 
+orbs:
+  docker: circleci/docker@2.2.0
+
 jobs:
   test-and-lint:
     docker:
@@ -49,6 +52,24 @@ jobs:
           command: |
             . .donggiang_store/bin/activate
             make lint
+
+  docker-task:
+    executor: docker/docker
+
+    working_directory: ~/donggiang_store
+
+    steps:
+      - checkout
+      - docker/install-docker-compose
+      - run:
+          name: build image
+          command: |
+            docker-compose --file "docker-compose.prod.yml" --project-name "donggiang_store-prod" build \
+              --build-arg profile=default
+      - run:
+          name: push image
+          command: |
+            docker-compose --file "docker-compose.prod.yml" --project-name "donggiang_store-prod" push
 
 workflows:
   donggiang_store-workflows:
