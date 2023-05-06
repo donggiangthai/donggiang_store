@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 import braintree
 import boto3
 from boto3.session import Session
+from ec2_metadata import ec2_metadata
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -33,13 +34,18 @@ DEBUG = bool(os.environ.get('DEBUG', 'False') == 'True')
 if DEBUG:
     boto3_session = Session(
         profile_name=os.environ.get('AWS_PROFILE_NAME'),
-        region_name=os.environ.get('AWS_REGION_NAME')
+        region_name=os.environ.get(
+            'AWS_DEFAULT_REGION'
+        )
     )
     ssm_client = boto3_session.client(service_name='ssm')
 else:
     ssm_client = boto3.client(
         service_name='ssm',
-        region_name=os.environ.get('AWS_REGION_NAME')
+        region_name=os.environ.get(
+            ec2_metadata.region,
+            'AWS_DEFAULT_REGION'
+        )
     )
 
 ssm_prefix = '/donggiang_store'
@@ -174,7 +180,13 @@ WSGI_APPLICATION = 'store.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': os.environ.get(
+            'DATABASE_ENGINE',
+            ssm_client.get_parameter(
+                Name=f"{ssm_prefix}/DATABASE_ENGINE",
+                WithDecryption=True
+            )['Parameter']['Value']
+        ),
         'NAME': os.environ.get(
             'DATABASE_NAME',
             ssm_client.get_parameter(
