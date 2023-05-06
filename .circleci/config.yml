@@ -60,6 +60,7 @@ jobs:
 
     steps:
       - checkout
+      - setup_remote_docker
       - docker/install-docker-tools
       - run:
           name: build image
