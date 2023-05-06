@@ -51,7 +51,6 @@ commands:
             PARAM_AWS_CLI_SECRET_ACCESS_KEY: <<parameters.aws-secret-access-key>>
             PARAM_AWS_CLI_REGION: <<parameters.aws-region>>
             PARAM_AWS_CLI_PROFILE_NAME: <<parameters.profile-name>>
-          when: << parameters.when >>
           command: |
             if aws --version | grep "aws-cli/" > /dev/null
             then
