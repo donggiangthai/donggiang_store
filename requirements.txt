@@ -17,3 +17,4 @@ boto3
 pylint
 pylint-django
 pylint-plugin-utils
+ec2_metadata
