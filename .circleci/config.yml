@@ -75,3 +75,6 @@ workflows:
   donggiang_store-workflows:
     jobs:
       - test-and-lint
+      - docker-task:
+          requires:
+            - test-and-lint
