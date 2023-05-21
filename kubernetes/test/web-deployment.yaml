@@ -55,7 +55,7 @@ spec:
           livenessProbe:
             periodSeconds: 15
             timeoutSeconds: 2
-            successThreshold: 2
+            successThreshold: 1
             failureThreshold: 2
             httpGet:
               path: /health
