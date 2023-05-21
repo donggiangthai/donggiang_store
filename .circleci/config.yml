@@ -3,6 +3,7 @@ version: 2.1
 
 orbs:
   docker: circleci/docker@2.2.0
+  aws-eks: circleci/aws-eks@2.2.0
 
 commands:
   exporter:
@@ -93,9 +94,7 @@ jobs:
   test-and-lint:
     docker:
       - image: cimg/python:3.10
-
     working_directory: ~/donggiang_store
-
     steps:
       - checkout
 
@@ -105,31 +104,26 @@ jobs:
             - v1-dependencies-{{ checksum "requirements.txt" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-
       - run:
           name: create virtualenv
           command: |
             make setup
-
       - run:
           name: install dependencies
           command: |
             . .donggiang_store/bin/activate
             make install
-
       - save_cache:
           paths:
             - ./.donggiang_store
             - /var/cache/apt
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-
       # run tests!
       - run:
           name: run tests
           command: |
             . .donggiang_store/bin/activate
             make test
-
       # run lints!
       - setup_remote_docker
       - run:
@@ -140,9 +134,7 @@ jobs:
 
   docker-task:
     executor: docker/docker
-
     working_directory: ~/donggiang_store
-
     steps:
       - checkout
       - exporter
@@ -169,6 +161,28 @@ jobs:
             docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
             docker-compose --file "docker-compose.prod.yml" --project-name "donggiang_store-prod" push
 
+  eks-deployment:
+    docker:
+      - image: cimg/python:3.10
+    parameters:
+      cluster-name:
+        description: |
+          Name of the EKS cluster
+        type: string
+        default: capstone
+    steps:
+      - checkout
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+          aws-profile: default
+          aws-region: us-east-1
+          install-kubectl: true
+          kubectl-version: v1.26.4
+      - run:
+          name: test kubectl connection
+          command: |
+            kubectl cluster-info
+
 workflows:
   donggiang_store-workflows:
     jobs:
@@ -176,3 +190,6 @@ workflows:
       - docker-task:
           requires:
             - test-and-lint
+      - eks-deployment:
+          requires:
+            - docker-task

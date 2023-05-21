@@ -3,10 +3,10 @@ version: '3.8'
 services:
   redis:
     image: redis:6-alpine3.17
-    expose:
-      - 6379
+    ports:
+      - "6379:6379"
 
-  flower:
+  celery-monitor:
     image: mher/flower:master
     command: celery --broker=redis://redis:6379/0 flower --port=5555 --purge_offline_workers=3600
     ports:
@@ -18,24 +18,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: donggiangthai/donggiang_store_local:web
+    image: donggiangthai/donggiang_store_local-web:health-check
     volumes:
-      - .:/usr/src/app/
       - ~/.aws/credentials:/home/app/.aws/credentials:ro
     ports:
       - "8000:8000"
     env_file:
       - .env
     depends_on:
-      - db
       - redis
-
-  db:
-    image: postgres:15.2-alpine3.17
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - .env.db
 
 volumes:
   postgres_data:

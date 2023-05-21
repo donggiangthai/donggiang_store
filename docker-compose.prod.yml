@@ -3,10 +3,10 @@ version: '3.8'
 services:
   redis:
     image: redis:6-alpine3.17
-    expose:
-      - 6379
+    ports:
+      - "6379:6379"
 
-  flower:
+  celery-monitor:
     image: mher/flower:master
     command: celery --broker=redis://redis:6379/0 flower --port=5555 --purge_offline_workers=60
     ports:
@@ -22,9 +22,10 @@ services:
     expose:
       - 8000
     environment:
-      - DEBUG=${DEBUG}
-      - USE_S3=${USE_S3}
-      - DATABASE=${DATABASE}
+      - DEBUG=False
+      - AWS_DEFAULT_REGION=us-east-1
+      - USE_S3=True
+      - DATABASE=postgres
     depends_on:
       - redis
 
@@ -37,6 +38,3 @@ services:
       - "1337:80"
     depends_on:
       - web
-
-volumes:
-  postgres_data:
