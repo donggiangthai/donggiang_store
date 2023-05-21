@@ -103,8 +103,10 @@ USER app
 EXPOSE 8000
 
 ARG profile=""
-
 ENV profile="$profile"
+
+# Change permission
+RUN chmod +x /home/app/web/*.sh
 
 # Entrypoint
 ENTRYPOINT ["/home/app/web/entrypoint.sh"]
