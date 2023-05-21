@@ -194,7 +194,7 @@ jobs:
             envsubst < web-deployment.yaml > web-deployment-prod.yaml
             envsubst < nginx-deployment.yaml > nginx-deployment-prod.yaml
             kubectl apply \
-            --file celery-monitor-deployment.yaml,celery-monitor-service.yaml,donggiang-store-default-networkpolicy.yaml,nginx-deployment-prod.yaml,nginx-service.yaml,redis-deployment.yaml,redis-service.yaml,web-deployment-prod.yaml,web-service.yaml
+            --filename celery-monitor-deployment.yaml,celery-monitor-service.yaml,donggiang-store-default-networkpolicy.yaml,nginx-deployment-prod.yaml,nginx-service.yaml,redis-deployment.yaml,redis-service.yaml,web-deployment-prod.yaml,web-service.yaml
       - run:
           name: get rollout status
           command: |
