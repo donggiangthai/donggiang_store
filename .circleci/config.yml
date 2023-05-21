@@ -180,6 +180,13 @@ jobs:
           install-kubectl: true
           kubectl-version: v1.26.4
       - run:
+          name: install dependencies
+          command: |
+            sudo apt-get install \
+              --quiet --no-install-recommends \
+              --fix-broken --show-progress --assume-yes \
+            gettext
+      - run:
           name: apply
           command: |
             cd kubernetes/test
