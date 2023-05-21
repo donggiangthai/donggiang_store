@@ -75,7 +75,15 @@ Visit [Redis Developer -
 ### _Running docker from WSL_:
 - Open file ~/.docker/config.json with text editor `sudo vi ~/.docker/config.json`.
 - Change `credsStore` to `credStore`.
-- Close and opend terminal again.
+- Close and open the terminal again.
 - Run the command to build docker image `docker build --tag donggiang_store:v1.0.0 .`
 - Run the script to run the container `docker container run --name donggiang_store --detach --publish 8000:8000 donggiang_store:v1.0.0`
 - Simple way is to run the script `source run_docker.sh`
+
+### _Troubleshoot_
+- Whenever you get this error while using the run_docker.sh or run-docker-compose.sh scripts, follow these steps:
+  - Open file config.json to edit: `sudo vi ~/.docker/config.json`
+  - Press `Insert` to enter the edit mode. 
+  - Change the line contain `credsStore` to `credStore`
+  - Press `ESC` to exit the edit mode. Enter `:wq` to write and quit.
+  - Run the script again.

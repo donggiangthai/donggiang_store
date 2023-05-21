@@ -33,9 +33,10 @@ def payment_completed(order_id):
         }
     )
     out = BytesIO()
+    weasyprint_css = os.path.join(settings.BASE_DIR, "shop", "static", "css", "pdf.css")
     weasyprint.HTML(string=html).write_pdf(
         out,
-        stylesheets=[weasyprint.CSS(settings.STATIC_ROOT + '/css/pdf.css')]
+        stylesheets=[weasyprint.CSS(weasyprint_css)]
     )
 
     # attach PDF file

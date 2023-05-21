@@ -99,7 +99,7 @@ RUN chown --recursive --from=root:root app:app $APP_HOME
 # change to the app user
 USER app
 
-# Expose port 8000 for Django as default port
+# Expose port 8000 for Django default port
 EXPOSE 8000
 
 ARG profile=""

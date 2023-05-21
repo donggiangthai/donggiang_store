@@ -138,6 +138,13 @@ INSTALLED_APPS = [
     'coupons',
 
     # 3rd-party app
+    'health_check',
+    'health_check.db',
+    'health_check.storage',
+    'health_check.contrib.celery',
+    'health_check.contrib.migrations',
+    'health_check.contrib.s3boto3_storage',
+    'health_check.contrib.redis',
     'storages',
     'rest_framework',
     'rest_framework.authtoken',
@@ -239,6 +246,8 @@ DATABASES = {
         ),
     }
 }
+
+REDIS_URL = os.environ.get('BROKER_URL', 'redis://localhost:6379/0')
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -37,12 +39,11 @@ def admin_order_pdf(request, order_id):
         content_type='application/pdf',
     )
     response['Content-Disposition'] = f"filename=order_{order_id}.pdf"
+    weasyprint_css = os.path.join(settings.BASE_DIR, "shop", "static", "css", "pdf.css")
     weasyprint.HTML(string=html).write_pdf(
         response,
         stylesheets=[
-            weasyprint.CSS(
-                settings.STATIC_ROOT + '/css/pdf.css'
-            )
+            weasyprint.CSS(weasyprint_css)
         ]
     )
     return response
