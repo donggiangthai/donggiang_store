@@ -152,8 +152,7 @@ jobs:
       - run:
           name: build image
           command: |
-            docker-compose --file "docker-compose.prod.yml" --project-name "donggiang_store-prod" build \
-              --build-arg profile=default
+            docker-compose --file "docker-compose.prod.yml" --project-name "donggiang_store-prod" build
       - run:
           name: push image
           command: |
