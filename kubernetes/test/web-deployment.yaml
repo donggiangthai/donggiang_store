@@ -45,11 +45,11 @@ spec:
             failureThreshold: 2
             httpGet:
               path: /health
-              port: web
+              port: 8000
           startupProbe:
             httpGet:
               path: /health
-              port: web
+              port: 8000
             failureThreshold: 30
             periodSeconds: 10
           livenessProbe:
@@ -59,7 +59,7 @@ spec:
             failureThreshold: 2
             httpGet:
               path: /health
-              port: web
+              port: 8000
           resources: {}
       restartPolicy: Always
 status: {}

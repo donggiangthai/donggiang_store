@@ -9,6 +9,7 @@ metadata:
     io.kompose.service: nginx
   name: nginx
 spec:
+  type: LoadBalancer
   ports:
     - name: "nginx"
       port: 1337
