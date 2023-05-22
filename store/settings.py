@@ -121,7 +121,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://*',
     'http://127.0.0.1:1337',
     'http://localhost:1337',
-    '*us-east-1.elb.amazonaws.com*'
+    'http://*us-east-1.elb.amazonaws.com*',
 ]
 CORS_ORIGIN_ALLOW_ALL = True
 
