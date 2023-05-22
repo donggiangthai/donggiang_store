@@ -156,8 +156,8 @@ jobs:
       - run:
           name: push image
           command: |
-            aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | \
-            docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
+            echo ${DOCKER_HUB_PASSWORD} | \
+            docker login --username ${DOCKER_HUB_ID} --password-stdin
             docker-compose --file "docker-compose.prod.yml" --project-name "donggiang_store-prod" push
 
   eks-deployment:

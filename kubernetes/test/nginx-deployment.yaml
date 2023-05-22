@@ -25,7 +25,7 @@ spec:
         io.kompose.service: nginx
     spec:
       containers:
-        - image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/donggiang_store-nginx:${TAG}
+        - image: donggiangthai/donggiang_store-nginx:${TAG}
           name: nginx
           ports:
             - containerPort: 80

@@ -42,7 +42,7 @@ spec:
               value: "True"
             - name: ELB_URL
               value: ${ELB_URL}
-          image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/donggiang_store-web:${TAG}
+          image: donggiangthai/donggiang_store-web:${TAG}
           name: web
           ports:
             - containerPort: 8000
