@@ -116,7 +116,6 @@ jobs:
       - save_cache:
           paths:
             - ./.donggiang_store
-            - /var/cache/apt
           key: v1-dependencies-{{ checksum "requirements.txt" }}
       # run tests!
       - run:
@@ -235,6 +234,14 @@ workflows:
       - docker-task:
           requires:
             - test-and-lint
+          filters:
+            branches:
+              only:
+                - master
       - eks-deployment:
           requires:
             - docker-task
+          filters:
+            branches:
+              only:
+                - master
