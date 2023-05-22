@@ -185,15 +185,41 @@ jobs:
             && sudo apt-get install \
               --quiet --no-install-recommends \
               --fix-broken --show-progress --assume-yes \
-            gettext
+            gettext \
+            jq
       - run:
           name: apply
           command: |
             cd kubernetes/test
+            # Create network
+            kubectl apply \
+              --filename donggiang-store-default-networkpolicy.yaml
+            
+            # Create Redis
+            kubectl apply \
+              --filename redis-deployment.yaml,redis-service.yaml
+            
+            # Create monitor for celery worker
+            kubectl apply \
+              --filename celery-monitor-deployment.yaml,celery-monitor-service.yaml
+            
+            # Create load balancer service
+            kubectl apply \
+              --filename nginx-service.yaml
+            
+            # Get ELB host name
+            export ELB_URL=$(kubectl get svc nginx -o json | jq -r '.status.loadBalancer.ingress[0].hostname')
+            # Substitution variable
             envsubst < web-deployment.yaml > web-deployment-prod.yaml
+            kubectl apply \
+              --filename web-deployment-prod.yaml,web-service.yaml
+            
+            # Create nginx proxy
+            # Substitution variable
             envsubst < nginx-deployment.yaml > nginx-deployment-prod.yaml
             kubectl apply \
-            --filename celery-monitor-deployment.yaml,celery-monitor-service.yaml,donggiang-store-default-networkpolicy.yaml,nginx-deployment-prod.yaml,nginx-service.yaml,redis-deployment.yaml,redis-service.yaml,web-deployment-prod.yaml,web-service.yaml
+              --filename nginx-deployment-prod.yaml
+
       - run:
           name: get rollout status
           command: |

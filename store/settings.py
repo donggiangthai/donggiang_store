@@ -113,18 +113,13 @@ AUTH_USER_MODEL = 'users.CustomUser'
 CART_SESSION_ID = 'cart'
 
 # Security setting follows the `check --deploy`
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 CSRF_TRUSTED_ORIGINS = [
-    'https://*',
-    'http://*',
     'http://127.0.0.1:1337',
     'http://localhost:1337',
-    'http://*.us-east-1.elb.amazonaws.com',
+    f"http://{os.environ.get('ELB_URL')}"
 ]
-CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
