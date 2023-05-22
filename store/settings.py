@@ -116,7 +116,13 @@ CART_SESSION_ID = 'cart'
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-CSRF_TRUSTED_ORIGINS = ['https://*', 'http://127.0.0.1:1337', 'http://localhost:1337']
+CSRF_TRUSTED_ORIGINS = [
+    'https://*',
+    'http://*',
+    'http://127.0.0.1:1337',
+    'http://localhost:1337',
+    '*us-east-1.elb.amazonaws.com*'
+]
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
