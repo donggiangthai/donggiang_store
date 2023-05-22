@@ -68,3 +68,21 @@
   # Update deployment image
   kubectl set image deployments/web web=donggiangthai/donggiang_store_local-web:static-fix-v1
   ```
+* Creating an EKS cluster
+```powershell
+eksctl create cluster `
+  --name capstone `
+  --region us-east-1 `
+  --zones us-east-1a,us-east-1b,us-east-1c,us-east-1d `
+  --asg-access `
+  --full-ecr-access `
+  --alb-ingress-access `
+  --instance-prefix donggiang-store `
+  --node-type t2.micro `
+  --nodes 3 `
+  --nodes-min 3 `
+  --nodes-max 10 `
+  --max-pods-per-node 4 `
+  --node-ami-family Ubuntu2004 `
+  --timeout 60m
+```
