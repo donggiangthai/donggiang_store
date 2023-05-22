@@ -219,11 +219,14 @@ jobs:
             envsubst < nginx-deployment.yaml > nginx-deployment-prod.yaml
             kubectl apply \
               --filename nginx-deployment-prod.yaml
-
       - run:
           name: get rollout status
           command: |
             kubectl rollout status deployment/web
+      - run:
+          name: verification
+          command: |
+            kubectl get all
 
 workflows:
   donggiang_store-workflows:
