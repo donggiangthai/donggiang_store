@@ -86,3 +86,8 @@ eksctl create cluster `
   --node-ami-family Ubuntu2004 `
   --timeout 60m
 ```
+
+* Connecting to the existing EKS cluster
+```commandline
+aws eks update-kubeconfig --name capstone --region us-east-1
+```
