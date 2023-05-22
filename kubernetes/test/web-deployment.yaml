@@ -30,6 +30,8 @@ spec:
               value: us-east-1
             - name: DATABASE
               value: postgres
+            - name: BROKER_URL
+              value: redis://redis:6379/0
             - name: DEBUG
               value: "False"
             - name: USE_S3

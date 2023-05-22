@@ -26,6 +26,7 @@ services:
       - AWS_DEFAULT_REGION=us-east-1
       - USE_S3=True
       - DATABASE=postgres
+      - BROKER_URL=redis://redis:6379/0
     depends_on:
       - redis
 
