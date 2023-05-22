@@ -190,7 +190,7 @@ jobs:
       - run:
           name: apply
           command: |
-            cd kubernetes/test
+            cd kubernetes/prod
             # Create network
             kubectl apply \
               --filename donggiang-store-default-networkpolicy.yaml

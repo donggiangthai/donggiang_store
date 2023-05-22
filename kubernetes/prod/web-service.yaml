@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe -f docker-compose.prod.yml convert
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f .\docker-compose.prod.yml -v -o .\kubernetes\test\
     kompose.version: 1.28.0 (c4137012e)
   creationTimestamp: null
   labels:
@@ -11,7 +11,7 @@ metadata:
 spec:
   ports:
     - name: "web"
-      port: 80
+      port: 8000
       targetPort: 8000
   selector:
     io.kompose.service: web

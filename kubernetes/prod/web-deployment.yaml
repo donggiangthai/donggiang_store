@@ -2,22 +2,26 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe -f docker-compose.prod.yml convert
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f .\docker-compose.prod.yml -v -o .\kubernetes\test\
     kompose.version: 1.28.0 (c4137012e)
   creationTimestamp: null
   labels:
     io.kompose.service: web
   name: web
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       io.kompose.service: web
-  strategy: {}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       annotations:
-        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe -f docker-compose.prod.yml convert
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f .\docker-compose.prod.yml -v -o .\kubernetes\test\
         kompose.version: 1.28.0 (c4137012e)
       creationTimestamp: null
       labels:
@@ -25,35 +29,49 @@ spec:
         io.kompose.service: web
     spec:
       containers:
-        - envFrom:
-            - configMapRef:
-                name: env-prod-configmap-v1
-          image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/donggiang_store-web:$TAG
+        - env:
+            - name: AWS_DEFAULT_REGION
+              value: us-east-1
+            - name: DATABASE
+              value: postgres
+            - name: BROKER_URL
+              value: redis://redis:6379/0
+            - name: DEBUG
+              value: "False"
+            - name: USE_S3
+              value: "True"
+            - name: ELB_URL
+              value: ${ELB_URL}
+          image: donggiangthai/donggiang_store-web:${TAG}
           name: web
           ports:
             - containerPort: 8000
           readinessProbe:
+            initialDelaySeconds: 180
             periodSeconds: 15
-            timeoutSeconds: 2
-            successThreshold: 2
-            failureThreshold: 2
-            httpGet:
-              path: /health
-              port: web
-          startupProbe:
-            httpGet:
-              path: /health
-              port: web
-            failureThreshold: 30
-            periodSeconds: 10
-          livenessProbe:
-            periodSeconds: 15
-            timeoutSeconds: 2
+            timeoutSeconds: 10
             successThreshold: 1
-            failureThreshold: 2
+            failureThreshold: 300
             httpGet:
               path: /health
-              port: web
+              port: 8000
+              scheme: HTTP
+#          startupProbe:
+#            httpGet:
+#              path: /health
+#              port: 8000
+#            failureThreshold: 30
+#            periodSeconds: 10
+          livenessProbe:
+            initialDelaySeconds: 600
+            periodSeconds: 15
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 300
+            httpGet:
+              path: /health
+              port: 8000
+              scheme: HTTP
           resources: {}
       restartPolicy: Always
 status: {}

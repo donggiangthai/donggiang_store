@@ -78,11 +78,11 @@ eksctl create cluster `
   --full-ecr-access `
   --alb-ingress-access `
   --instance-prefix donggiang-store `
-  --node-type t2.micro `
-  --nodes 3 `
-  --nodes-min 3 `
+  --node-type t3.medium `
+  --nodes 1 `
+  --nodes-min 1 `
   --nodes-max 10 `
-  --max-pods-per-node 4 `
+  --max-pods-per-node 17 `
   --node-ami-family Ubuntu2004 `
   --timeout 60m
 ```
