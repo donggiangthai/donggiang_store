@@ -115,15 +115,15 @@ CART_SESSION_ID = 'cart'
 # Security setting follows the `check --deploy`
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_TRUSTED_ORIGINS = [
     'https://*',
     'http://*',
     'http://127.0.0.1:1337',
     'http://localhost:1337',
-    'http://*us-east-1.elb.amazonaws.com*',
+    'http://*.us-east-1.elb.amazonaws.com',
 ]
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -144,6 +144,7 @@ INSTALLED_APPS = [
     'coupons',
 
     # 3rd-party app
+    'corsheaders',
     'health_check',
     'health_check.db',
     'health_check.storage',
@@ -164,6 +165,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
