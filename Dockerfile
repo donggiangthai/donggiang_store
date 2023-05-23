@@ -71,7 +71,6 @@ RUN mkdir --parents $APP_HOME \
 WORKDIR $APP_HOME
 
 # Install postgres dependencies
-# hadolint ignore=DL3008
 RUN --mount=type=cache,target=/var/cache/apt \
     apt-get update --fix-missing \
     && DEBIAN_FRONTEND=noninteractive apt-get install \
