@@ -48,8 +48,10 @@ test:
 	# Lint py scripts
 	DJANGO_SETTINGS_MODULE=store.settings pylint --load-plugins pylint_django --disable=R,C,W0611 **/*.py
 lint:
-	# Lint Dockerfile
+	# Lint the Dockerfile of the web application
 	docker run --rm --interactive hadolint/hadolint < Dockerfile
+	# Lint the Dockerfile of the nginx
+	docker run --rm --interactive hadolint/hadolint < nginx/Dockerfile
 django-migration:
 	# Make migrations model
 	python3 manage.py makemigrations
