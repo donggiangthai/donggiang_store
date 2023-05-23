@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f .\docker-compose.prod.yml -v -o .\kubernetes\test\
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f .\docker-compose.prod.yml -v -o .\kubernetes\prod\
     kompose.version: 1.28.0 (c4137012e)
   creationTimestamp: null
   labels:
@@ -21,7 +21,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f .\docker-compose.prod.yml -v -o .\kubernetes\test\
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f .\docker-compose.prod.yml -v -o .\kubernetes\prod\
         kompose.version: 1.28.0 (c4137012e)
       creationTimestamp: null
       labels:
@@ -31,7 +31,7 @@ spec:
       containers:
         - env:
             - name: AWS_DEFAULT_REGION
-              value: us-east-1
+              value: ${AWS_DEFAULT_REGION}
             - name: DATABASE
               value: postgres
             - name: BROKER_URL
@@ -42,7 +42,7 @@ spec:
               value: "True"
             - name: ELB_URL
               value: ${ELB_URL}
-          image: donggiangthai/donggiang_store-web:${TAG}
+          image: ${DOCKER_HUB_ID}/donggiang_store-web:${TAG}
           name: web
           ports:
             - containerPort: 8000
