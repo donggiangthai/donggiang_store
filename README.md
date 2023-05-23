@@ -87,3 +87,5 @@ Visit [Redis Developer -
   - Change the line contain `credsStore` to `credStore`
   - Press `ESC` to exit the edit mode. Enter `:wq` to write and quit.
   - Run the script again.
+
+### _Production README at kubernetes/prod_
